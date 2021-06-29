@@ -29,7 +29,7 @@ import static java.util.stream.Collectors.toSet;
  * Implement methods using Stream API
  */
 public class CrazyStreams {
-    private Collection<Account> accounts;
+    private final Collection<Account> accounts;
 
     public static CrazyStreams of(Collection<Account> accounts) {
         return new CrazyStreams(accounts);
@@ -45,7 +45,8 @@ public class CrazyStreams {
      * @return account with max balance wrapped with optional
      */
     public Optional<Account> findRichestPerson() {
-        return accounts.stream()
+        return accounts
+                .stream()
                 .max(comparing(Account::getBalance));
     }
 
@@ -56,9 +57,7 @@ public class CrazyStreams {
      * @return a list of accounts
      */
     public List<Account> findAccountsByBirthdayMonth(Month birthdayMonth) {
-        return accounts.stream()
-                .filter(a -> a.getBirthday().getMonth().equals(birthdayMonth))
-                .collect(toList());
+        return null;
     }
 
     /**
@@ -120,7 +119,6 @@ public class CrazyStreams {
     /**
      * Checks if there is at least one account with provided email domain.
      *
-     * @param emailDomain
      * @return true if there is an account that has an email with provided domain
      */
     public boolean containsAccountWithEmailDomain(String emailDomain) {
