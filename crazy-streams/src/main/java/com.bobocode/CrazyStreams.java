@@ -2,14 +2,150 @@ package com.bobocode;
 
 import com.bobocode.exception.EntityNotFoundException;
 import com.bobocode.model.Account;
+import com.bobocode.model.Sex;
 
 import java.math.BigDecimal;
 import java.time.Month;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+
+import static java.util.Comparator.comparing;
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.*;
+
+//   1
+/*
+    public Optional<Account> findRichestPerson() {
+        return accounts.stream()
+                .max(comparing(Account::getBalance));
+    }
+
+ */
+// 2
+/*
+    public List<Account> findAccountsByBirthdayMonth(Month birthdayMonth) {
+        return accounts.stream()
+                .filter(account -> account.getBirthday().getMonth().equals(birthdayMonth))
+                .collect(toList());
+    }
+ */
+
+//3
+/*
+    public Map<Boolean, List<Account>> partitionMaleAccounts() {
+        return accounts.stream()
+                .collect(groupingBy(account -> account.getSex() == Sex.MALE));
+    }
+    */
+//4
+/*
+    public Map<String, List<Account>> groupAccountsByEmailDomain() {
+        return accounts.stream()
+                .collect(groupingBy(account -> account.getEmail().split("@")[1]));
+    }
+*/
+    //5
+ /*
+    public int getNumOfLettersInFirstAndLastNames() {
+        return accounts.stream()
+                .mapToInt(account -> account.getFirstName().length()
+                        + account.getLastName().length())
+                .sum();
+    }
+*/
+// 6
+    /*public BigDecimal calculateTotalBalance() {
+        return accounts.stream()
+                .map(Account::getBalance)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }*/
+//7
+  /*
+   public List<Account> sortByFirstAndLastNames() {
+        return accounts.stream()
+                .sorted(comparing(Account::getFirstName).thenComparing(Account::getLastName))
+                .collect(toList());
+    }
+*/
+    // 8
+/*
+    public boolean containsAccountWithEmailDomain(String emailDomain) {
+        return accounts.stream()
+                .map(account -> account.getEmail().split("@")[1])
+                .anyMatch(domain -> Objects.equals(domain,emailDomain));
+    }
+*/
+// 9
+/*
+    public BigDecimal getBalanceByEmail(String email) {
+        return accounts.stream()
+                .filter(account -> account.getEmail().equals(email))
+                .findFirst()
+                .map(Account::getBalance)
+                .orElseThrow(() -> {
+                    throw new EntityNotFoundException("Cannot find Account by email=" + email);
+                });
+    }
+*/
+// 10
+/*
+    public Map<Long, Account> collectAccountsById() {
+        return accounts.stream()
+                .collect(toMap(Account::getId, identity()));
+    }
+*/
+// 11
+/*
+    public Map<String, BigDecimal> collectBalancesByEmailForAccountsCreatedOn(int year) {
+        return accounts.stream()
+                .filter(account -> account.getCreationDate().getYear() == year)
+                .collect(toMap(Account::getEmail, Account::getBalance));
+    }
+*/
+// 12
+/*
+    public Map<String, Set<String>> groupFirstNamesByLastNames() {
+        return accounts.stream()
+                .collect(groupingBy(Account::getLastName, mapping(Account::getFirstName, toSet())));
+    }
+*/
+    //13
+/*
+    public Map<Month, String> groupCommaSeparatedFirstNamesByBirthdayMonth() {
+        return accounts.stream()
+                .collect(groupingBy(a -> a.getBirthday().getMonth(),
+                        mapping(Account::getFirstName, joining(", "))));
+    }
+*/
+  // 14
+//
+ /*public Map<Month, BigDecimal> groupTotalBalanceByCreationMonth() {
+        return accounts.stream()
+                .collect(groupingBy(a -> a.getCreationDate().getMonth(),
+                        mapping(Account::getBalance, reducing(BigDecimal.ZERO, BigDecimal::add))));
+    }
+*/
+   //15
+/*
+    public Map<Character, Long> getCharacterFrequencyInFirstNames() {
+        return accounts.stream()
+                .map(Account::getFirstName)
+                .flatMapToInt(String::chars)
+                .mapToObj(ch -> (char)ch)
+                .collect(groupingBy(identity(), counting()));
+    }
+*/
+  // 16
+ /*
+ public Map<Character, Long> getCharacterFrequencyIgnoreCaseInFirstAndLastNames() {
+        return accounts.stream()
+                .map(account -> account.getFirstName().concat(account.getLastName()).toLowerCase())
+                .flatMapToInt(String::chars)
+                .mapToObj(c -> (char)c)
+                .collect(groupingBy(identity(), counting()));
+    }
+*/
+
+
 
 /**
  * Implement methods using Stream API
